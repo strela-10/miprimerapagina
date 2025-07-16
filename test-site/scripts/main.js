@@ -1,43 +1,48 @@
-// Store a reference to the <h1> in a variable
-const myHeading = document.querySelector("h1");
-// Update the text content of the <h1>
+const listItems = document.querySelectorAll("li");
+
+function toggleDone(e) {
+  if (!e.target.className) {
+    e.target.className = "done";
+  } else {
+    e.target.className = "";
+  }
+}
+
+listItems.forEach((item) => {
+  item.addEventListener("click", toggleDone);
+});
 
 const myImage = document.querySelector("img");
 
-let miImage = document.querySelector("img");
-miImage.onclick = function () {
-  let miSrc = miImage.getAttribute("src");
-  if (miSrc === "images/firefox-icon.png") {
-    miImage.setAttribute("src", "images/Soldado.png");
+myImage.addEventListener("click", () => {
+  const mySrc = myImage.getAttribute("src");
+  if (mySrc === "images/cslogo.webp") {
+    myImage.setAttribute("src", "images/warthunder.png");
   } else {
-    miImage.setAttribute("src", "images/Soldado.png");
+    myImage.setAttribute("src", "images/cslogo.webp");
   }
-};
+});
 
-document.querySelector("html").onclick = function () {
-  alert("¡Ouch! ¡Deja de pincharme!");
-};
+let myButton = document.querySelector("button");
+let myHeading = document.querySelector("h1");
 
-let miBoton = document.querySelector("button");
-let miTitulo = document.querySelector("h1");
-
-function estableceNombreUsuario() {
-  let miNombre = prompt("Introduzca su nombre.");
-  if (!miNombre) {
-    estableceNombreUsuario();
+function setUserName() {
+  const myName = prompt("Please enter your name.");
+  if (!myName) {
+    setUserName();
   } else {
-    localStorage.setItem("nombre", miNombre);
-    miTitulo.innerHTML = "Mozilla is genial, " + miNombre;
+    localStorage.setItem("name", myName);
+    myHeading.textContent = `Mozilla is cool, ${myName}`;
   }
 }
 
-if (!localStorage.getItem("nombre")) {
-  estableceNombreUsuario();
+if (!localStorage.getItem("name")) {
+  setUserName();
 } else {
-  let nombreAlmacenado = localStorage.getItem("nombre");
-  miTitulo.textContent = "Mozilla es genial," + nombreAlmacenado;
+  const storedName = localStorage.getItem("name");
+  myHeading.textContent = `Mozilla is cool, ${storedName}`;
 }
 
-miBoton.onclick = function () {
-  estableceNombreUsuario();
-};
+myButton.addEventListener("click", () => {
+  setUserName();
+});
